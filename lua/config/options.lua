@@ -5,6 +5,20 @@
 local opt = vim.opt
 local g = vim.g
 
+
+
+-----------------------------------------------------------
+-- Conjure
+-----------------------------------------------------------
+
+-- CONJURE: do NOT auto-start nREPL
+vim.g["conjure#client#clojure#nrepl#auto_start"] = false
+
+-- Do NOT try to guess port files
+vim.g["conjure#client#clojure#nrepl#detect_port"] = false
+
+-- We will connect manually
+vim.g["conjure#client#clojure#nrepl#command"] = "clj -M:nrepl"
 -----------------------------------------------------------
 -- General
 -----------------------------------------------------------
@@ -15,6 +29,7 @@ opt.backup = false                      -- don’t create backup files
 opt.undofile = true                     -- persistent undo
 opt.timeoutlen = 400                    -- faster mapped sequence timeout
 opt.updatetime = 250                    -- faster completion
+
 
 -----------------------------------------------------------
 -- UI
@@ -27,14 +42,17 @@ opt.termguicolors = true                -- enable true color support
 opt.wrap = false                        -- no line wrap
 opt.scrolloff = 8                       -- keep cursor away from edges
 opt.sidescrolloff = 8                   -- same for horizontal scrolling
-opt.showmode = false                    -- don’t show mode (lualine handles that)
+opt.showmode = false                    -- don't show mode (lualine handles that)
 
+
+opt.cmdheight = 0          -- hide cmdline until typing :
+opt.laststatus = 3         -- single statusline at bottom
 -----------------------------------------------------------
 -- Indentation
 -----------------------------------------------------------
 opt.expandtab = true                    -- use spaces instead of tabs
-opt.shiftwidth = 2                      -- shift 2 spaces when indenting
-opt.tabstop = 2                         -- 1 tab == 2 spaces
+opt.shiftwidth = 4                      -- shift 2 spaces when indenting
+opt.tabstop = 4                        -- 1 tab == 2 spaces
 opt.smartindent = true                  -- smart indentation
 opt.autoindent = true                   -- maintain indent from previous line
 
@@ -55,8 +73,6 @@ opt.splitbelow = true                   -- horizontal split below
 -----------------------------------------------------------
 -- Appearance tweaks
 -----------------------------------------------------------
-opt.cmdheight = 1                       -- minimal command line height
-opt.laststatus = 3                      -- global statusline
 opt.fillchars = { eob = " " }           -- hide ~ on empty lines
 opt.pumheight = 10                      -- pop-up menu height
 opt.conceallevel = 2                    -- conceal formatting characters

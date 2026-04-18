@@ -1,28 +1,31 @@
--- ~/.config/nvim/init.lua
+vim.g.mapleader      = " "
+vim.g.maplocalleader = " "
 
--- Bootstrap lazy.nvim if it's not installed
+---------------------------------------------------------------------------
+-- Bootstrap lazy.nvim
+---------------------------------------------------------------------------
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
+    "git", "clone", "--filter=blob:none",
     "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
-    lazypath,
+    "--branch=stable", lazypath,
   })
 end
 vim.opt.rtp:prepend(lazypath)
 
+require("lazy").setup("plugins")
 
-
--- Load all plugins from plugins-setup.lua
-require("plugins.plugins-setup")
-require("config.colorscheme")
+---------------------------------------------------------------------------
+-- Core config
+---------------------------------------------------------------------------
 require("config.options")
 require("config.keymaps")
-require("plugins.nvimtree")
-require("plugins.lualine")
-require("plugins.telescope")
-require("plugins.tree-sitter")
-require("plugins.scnvim")
+require("config.filetypes")
+require("config.lsp")
+require("config.theme")
+
+vim.api.nvim_create_autocmd("VimEnter", {
+  once     = true,
+  callback = function() require("config.dashboard").open() end,
+})
